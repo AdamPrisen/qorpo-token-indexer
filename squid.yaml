@@ -1,0 +1,27 @@
+manifestVersion: subsquid.io/v0.1
+name: multichain-transfers-squid
+version: 1
+description: 'A squid that indexes USDC transfers on ETH and BSC'
+build:
+deploy:
+  addons:
+    postgres:
+  processor:
+    - name: eth-processor
+      cmd: [ "sqd", "process:prod:eth" ]
+      env:
+        RPC_ENDPOINT_ETH: ${{ secrets.RPC_ENDPOINT_ETH }}
+    - name: bsc-processor
+      cmd: [ "sqd", "process:prod:bsc" ]
+      env:
+        RPC_ENDPOINT_BSC: ${{ secrets.RPC_ENDPOINT_BSC }}
+	env:
+		DB_PORT: ${env.DB_PORT}
+		DB_HOST: ${env.DB_HOST}
+		DB_USER: ${env.DB_USER}
+		DB_PASSWORD: ${env.DB_PASSWORD}
+		DB_NAME: ${env.DB_NAME}
+
+
+  api:
+    cmd: [ "sqd", "serve:prod" ]

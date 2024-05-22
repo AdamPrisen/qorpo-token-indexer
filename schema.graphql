@@ -1,0 +1,18 @@
+
+enum BlockchainSymbol {
+	ETH
+	BNB
+}
+
+
+type TokenOwner @entity {
+	id: ID!
+	ownerAddress: String! @index
+	tokenAddress: String! @index
+	blockchainSymbol: BlockchainSymbol @index
+	balance: BigInt!
+	userId: String @index
+	lastUpdate: Int! @index
+}
+
+
